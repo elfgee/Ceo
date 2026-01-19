@@ -8,15 +8,6 @@ import {
   TableHeader,
   TableRow
 } from "@/app/components/ui/table";
-import {
-  Pagination,
-  PaginationContent,
-  PaginationEllipsis,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious
-} from "@/app/components/ui/pagination";
 import { ChevronLeft, ChevronRight } from "@/app/icons/lucide";
 
 type RestrictionType = "warning-1" | "warning-2" | "permanent";
@@ -323,7 +314,7 @@ export function Restrictions() {
                 <ChevronLeft className="h-4 w-4" />
                 <span>이전</span>
               </button>
-              
+
               {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => {
                 if (
                   page === 1 ||
@@ -345,7 +336,8 @@ export function Restrictions() {
                       {page}
                     </button>
                   );
-                } else if (page === currentPage - 2 || page === currentPage + 2) {
+                }
+                if (page === currentPage - 2 || page === currentPage + 2) {
                   return (
                     <div key={page} className="w-10 h-10 flex justify-center items-center">
                       <span className="text-sm text-foreground">…</span>
@@ -354,7 +346,7 @@ export function Restrictions() {
                 }
                 return null;
               })}
-              
+
               <button
                 type="button"
                 onClick={() => {
