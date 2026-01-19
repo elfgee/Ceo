@@ -95,7 +95,7 @@ const getDateRange = () => {
     const year = date.getFullYear();
     const month = String(date.getMonth() + 1).padStart(2, "0");
     const day = String(date.getDate()).padStart(2, "0");
-    return `${year}.${month}.${day}`;
+    return `${year}-${month}-${day}`;
   };
   
   return {
@@ -107,9 +107,9 @@ const getDateRange = () => {
 const getActionLabel = (action: RestrictionType): string => {
   switch (action) {
     case "warning-1":
-      return "경고1회";
+      return "경고 1회";
     case "warning-2":
-      return "경고2회";
+      return "경고 2회";
     case "permanent":
       return "영구제한";
   }
@@ -134,6 +134,7 @@ const getStatistics = (restrictions: Restriction[]) => {
 export function Restrictions() {
   const [filter, setFilter] = React.useState<RestrictionType | "all">("all");
   const [currentPage, setCurrentPage] = React.useState(1);
+  const [isLoading, setIsLoading] = React.useState(true);
   const itemsPerPage = 10;
   
   const dateRange = getDateRange();
@@ -158,6 +159,13 @@ export function Restrictions() {
   React.useEffect(() => {
     setCurrentPage(1);
   }, [filter]);
+
+  React.useEffect(() => {
+    const timer = window.setTimeout(() => {
+      setIsLoading(false);
+    }, 600);
+    return () => window.clearTimeout(timer);
+  }, []);
   
   return (
     <div className="flex flex-col gap-[30px] py-5 px-5">
@@ -169,7 +177,7 @@ export function Restrictions() {
             <span className="text-base font-bold leading-6 text-primary">총 {statistics.totalOffices}곳</span>
           </div>
           <div className="flex-1 md:h-5 text-left md:text-right text-sm font-normal leading-5 text-mutedForeground">
-            최근 1년 기준 ({dateRange.start}~{dateRange.end})
+            최근 1년 기준 ({dateRange.start} ~ {dateRange.end})
           </div>
         </div>
         
@@ -184,16 +192,9 @@ export function Restrictions() {
             )}
           >
             <div className="text-base font-semibold leading-6 text-secondaryForeground">전체</div>
-            <button
-              type="button"
-              onClick={(e) => {
-                e.stopPropagation();
-                setFilter("all");
-              }}
-              className="text-xl font-semibold leading-7 text-secondaryForeground underline cursor-pointer"
-            >
+            <div className="text-xl font-semibold leading-7 text-secondaryForeground">
               {statistics.totalActions}건
-            </button>
+            </div>
           </button>
           <button
             type="button"
@@ -204,16 +205,9 @@ export function Restrictions() {
             )}
           >
             <div className="text-base font-semibold leading-6 text-secondaryForeground">경고 1회</div>
-            <button
-              type="button"
-              onClick={(e) => {
-                e.stopPropagation();
-                setFilter("warning-1");
-              }}
-              className="text-xl font-semibold leading-7 text-secondaryForeground underline cursor-pointer"
-            >
+            <div className="text-xl font-semibold leading-7 text-secondaryForeground">
               {statistics.warning1}건
-            </button>
+            </div>
           </button>
           <button
             type="button"
@@ -224,16 +218,9 @@ export function Restrictions() {
             )}
           >
             <div className="text-base font-semibold leading-6 text-secondaryForeground">경고 2회</div>
-            <button
-              type="button"
-              onClick={(e) => {
-                e.stopPropagation();
-                setFilter("warning-2");
-              }}
-              className="text-xl font-semibold leading-7 text-secondaryForeground underline cursor-pointer"
-            >
+            <div className="text-xl font-semibold leading-7 text-secondaryForeground">
               {statistics.warning2}건
-            </button>
+            </div>
           </button>
           <button
             type="button"
@@ -244,22 +231,21 @@ export function Restrictions() {
             )}
           >
             <div className="text-base font-semibold leading-6 text-secondaryForeground">영구 제한</div>
-            <button
-              type="button"
-              onClick={(e) => {
-                e.stopPropagation();
-                setFilter("permanent");
-              }}
-              className="text-xl font-semibold leading-7 text-secondaryForeground underline cursor-pointer"
-            >
+            <div className="text-xl font-semibold leading-7 text-secondaryForeground">
               {statistics.permanent}건
-            </button>
+            </div>
           </button>
         </div>
       </div>
       
       {/* 테이블 영역 */}
-      {paginatedData.length > 0 ? (
+      {isLoading ? (
+        <div className="flex flex-col items-center justify-center py-12">
+          <div className="text-sm font-normal leading-5 text-mutedForeground">
+            로딩 중입니다...
+          </div>
+        </div>
+      ) : paginatedData.length > 0 ? (
         <div className="p-0 md:p-5 bg-transparent md:bg-background rounded-[4px] flex flex-col gap-2">
           <div className="flex justify-end items-center gap-[10px] h-10 px-0">
             <div className="text-sm font-normal leading-5 text-foreground">총 {filteredData.length}건</div>
@@ -270,16 +256,16 @@ export function Restrictions() {
             <Table>
               <TableHeader>
                 <TableRow className="border-0">
-                  <TableHead className="hidden min-[390px]:table-cell min-h-[48px] px-0 md:px-4 text-sm font-bold leading-5 text-foreground">
+                  <TableHead className="min-h-[48px] px-0 md:px-4 text-sm font-bold leading-5 text-foreground">
                     날짜
                   </TableHead>
                   <TableHead className="min-h-[48px] px-0 md:px-4 text-sm font-bold leading-5 text-foreground">
                     중개사무소
                   </TableHead>
-                  <TableHead className="hidden min-[390px]:table-cell min-h-[48px] px-0 md:px-4 text-sm font-bold leading-5 text-foreground">
+                  <TableHead className="hidden min-[391px]:table-cell min-h-[48px] px-0 md:px-4 text-sm font-bold leading-5 text-foreground">
                     지역
                   </TableHead>
-                  <TableHead className="hidden min-[390px]:table-cell min-h-[48px] px-0 md:px-4 text-sm font-bold leading-5 text-foreground">
+                  <TableHead className="hidden min-[391px]:table-cell min-h-[48px] px-0 md:px-4 text-sm font-bold leading-5 text-foreground">
                     위반 정책
                   </TableHead>
                   <TableHead className="min-h-[48px] px-0 md:px-4 text-sm font-bold leading-5 text-foreground">
@@ -290,16 +276,16 @@ export function Restrictions() {
               <TableBody>
                 {paginatedData.map((item) => (
                   <TableRow key={item.id} className="border-0 border-b border-border">
-                    <TableCell className="hidden min-[390px]:table-cell py-4 px-0 md:px-4 text-sm font-normal leading-5 text-foreground">
+                    <TableCell className="py-4 px-0 md:px-4 text-sm font-normal leading-5 text-foreground">
                       {item.date}
                     </TableCell>
                     <TableCell className="py-4 px-0 md:px-4 text-sm font-normal leading-5 text-foreground">
                       {item.officeName}(대표: {item.representativeName})
                     </TableCell>
-                    <TableCell className="hidden min-[390px]:table-cell py-4 px-0 md:px-4 text-sm font-normal leading-5 text-foreground">
+                    <TableCell className="hidden min-[391px]:table-cell py-4 px-0 md:px-4 text-sm font-normal leading-5 text-foreground">
                       {item.region}
                     </TableCell>
-                    <TableCell className="hidden min-[390px]:table-cell py-4 px-0 md:px-4 text-sm font-normal leading-5 text-foreground">
+                    <TableCell className="hidden min-[391px]:table-cell py-4 px-0 md:px-4 text-sm font-normal leading-5 text-foreground">
                       {item.violationPolicies.join(", ")}
                     </TableCell>
                     <TableCell className="py-4 px-0 md:px-4">
