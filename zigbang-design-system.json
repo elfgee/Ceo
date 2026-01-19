@@ -1,0 +1,539 @@
+{
+  "metadata": {
+    "name": "Zigbang Customized Shadcn Design System",
+    "version": "1.0.0",
+    "description": "shadcn/ui 컴포넌트를 직방(Zigbang) 디자인 시스템에 맞게 커스터마이징한 컴포넌트 라이브러리",
+    "framework": "React + Tailwind CSS v4",
+    "fontFamily": "Pretendard"
+  },
+  "colors": {
+    "canvas-50": "rgba(248, 250, 252, 1.00)",
+    "canvas-100": "rgba(241, 245, 249, 1.00)",
+    "grey-50": "rgba(249, 250, 251, 1.00)",
+    "grey-100": "rgba(243, 244, 246, 1.00)",
+    "grey-200": "rgba(229, 231, 235, 1.00)",
+    "grey-300": "rgba(209, 213, 219, 1.00)",
+    "grey-400": "rgba(156, 163, 175, 1.00)",
+    "grey-500": "rgba(107, 114, 128, 1.00)",
+    "grey-600": "rgba(75, 85, 99, 1.00)",
+    "grey-700": "rgba(55, 65, 81, 1.00)",
+    "grey-800": "rgba(31, 41, 55, 1.00)",
+    "grey-900": "rgba(17, 24, 39, 1.00)",
+    "primary": "rgba(255, 105, 5, 1.00)",
+    "primaryForeground": "rgba(255, 255, 255, 1.00)",
+    "secondary": "rgba(245, 245, 245, 1.00)",
+    "secondaryForeground": "rgba(55, 65, 81, 1.00)",
+    "zigbangOrange50": "rgba(255, 247, 240, 1.00)",
+    "zigbangOrange100": "rgba(255, 232, 217, 1.00)",
+    "zigbangOrange200": "rgba(255, 195, 155, 1.00)",
+    "zigbangOrange300": "rgba(255, 172, 118, 1.00)",
+    "zigbangOrange400": "rgba(255, 135, 55, 1.00)",
+    "zigbangOrange500": "rgba(255, 120, 30, 1.00)",
+    "zigbangOrange600": "rgba(255, 105, 5, 1.00)",
+    "zigbangOrange700": "rgba(228, 91, 0, 1.00)",
+    "zigbangOrange800": "rgba(140, 58, 3, 1.00)",
+    "zigbangOrange900": "rgba(102, 42, 2, 1.00)",
+    "destructive": "rgba(237, 58, 60, 1.00)",
+    "destructiveForeground": "rgba(255, 255, 255, 1.00)",
+    "background": "rgba(255, 255, 255, 1.00)",
+    "foreground": "rgba(31, 41, 55, 1.00)",
+    "card": "rgba(255, 255, 255, 1.00)",
+    "cardForeground": "rgba(31, 41, 55, 1.00)",
+    "popover": "rgba(255, 247, 240, 1.00)",
+    "popoverForeground": "rgba(31, 41, 55, 1.00)",
+    "muted": "rgba(245, 245, 245, 1.00)",
+    "mutedForeground": "rgba(107, 114, 128, 1.00)",
+    "accent": "rgba(255, 247, 240, 1.00)",
+    "accentForeground": "rgba(228, 91, 0, 1.00)",
+    "border": "rgba(229, 231, 235, 1.00)",
+    "input": "rgba(255, 255, 255, 1.00)",
+    "inputBackground": "rgba(255, 255, 255, 1.00)",
+    "ring": "rgba(0, 120, 241, 1.00)"
+  },
+  "typography": {
+    "fontSizes": {
+      "4xl": "36px",
+      "2xl": "24px",
+      "xl": "18px",
+      "lg": "18px",
+      "base": "16px",
+      "sm": "14px",
+      "xs": "12px"
+    },
+    "fontWeights": {
+      "normal": 400,
+      "medium": 500,
+      "semibold": 600,
+      "bold": 700
+    }
+  },
+  "spacing": {
+    "radius": "6px",
+    "radiusButton": "6px",
+    "radiusCard": "8px",
+    "radiusBadge": "9999px"
+  },
+  "components": [
+    {
+      "name": "Button",
+      "path": "/src/app/components/ui/button.tsx",
+      "description": "클릭 가능한 버튼 컴포넌트",
+      "category": "Form",
+      "variants": [
+        {
+          "name": "default",
+          "description": "기본 Primary 색상 버튼",
+          "props": {
+            "variant": "default"
+          }
+        },
+        {
+          "name": "destructive",
+          "description": "삭제 등 위험한 동작용 빨간색 버튼",
+          "props": {
+            "variant": "destructive"
+          }
+        },
+        {
+          "name": "outline",
+          "description": "테두리만 있는 버튼",
+          "props": {
+            "variant": "outline"
+          }
+        },
+        {
+          "name": "secondary",
+          "description": "보조 액션용 회색 버튼",
+          "props": {
+            "variant": "secondary"
+          }
+        },
+        {
+          "name": "ghost",
+          "description": "배경 없는 텍스트 버튼",
+          "props": {
+            "variant": "ghost"
+          }
+        },
+        {
+          "name": "link",
+          "description": "링크 스타일 버튼",
+          "props": {
+            "variant": "link"
+          }
+        }
+      ],
+      "usage": "<Button variant=\"default\">클릭</Button>"
+    },
+    {
+      "name": "Input",
+      "path": "/src/app/components/ui/input.tsx",
+      "description": "텍스트 입력 필드",
+      "category": "Form",
+      "usage": "<Input type=\"text\" placeholder=\"입력하세요\" />"
+    },
+    {
+      "name": "Card",
+      "path": "/src/app/components/ui/card.tsx",
+      "description": "콘텐츠를 담는 카드 컨테이너",
+      "category": "Layout",
+      "subComponents": [
+        "CardHeader",
+        "CardTitle",
+        "CardDescription",
+        "CardAction",
+        "CardContent",
+        "CardFooter"
+      ],
+      "usage": "<Card>\n  <CardHeader>\n    <CardTitle>제목</CardTitle>\n    <CardDescription>설명</CardDescription>\n  </CardHeader>\n  <CardContent>내용</CardContent>\n</Card>"
+    },
+    {
+      "name": "Badge",
+      "path": "/src/app/components/ui/badge.tsx",
+      "description": "상태나 레이블을 표시하는 배지",
+      "category": "Display",
+      "variants": [
+        {
+          "name": "default",
+          "description": "Primary 색상 배지",
+          "props": {
+            "variant": "default"
+          }
+        },
+        {
+          "name": "secondary",
+          "description": "회색 배지",
+          "props": {
+            "variant": "secondary"
+          }
+        },
+        {
+          "name": "destructive",
+          "description": "빨간색 배지",
+          "props": {
+            "variant": "destructive"
+          }
+        },
+        {
+          "name": "outline",
+          "description": "테두리만 있는 배지",
+          "props": {
+            "variant": "outline"
+          }
+        },
+        {
+          "name": "28/Round",
+          "description": "28px 높이의 둥근 배지",
+          "props": {
+            "variant": "default",
+            "size": "28",
+            "shape": "round"
+          }
+        }
+      ],
+      "usage": "<Badge variant=\"default\">새로운</Badge>"
+    },
+    {
+      "name": "Alert",
+      "path": "/src/app/components/ui/alert.tsx",
+      "description": "사용자에게 중요한 정보를 알리는 알림 박스",
+      "category": "Feedback",
+      "subComponents": [
+        "AlertTitle",
+        "AlertDescription"
+      ],
+      "variants": [
+        {
+          "name": "default",
+          "description": "기본 알림",
+          "props": {
+            "variant": "default"
+          }
+        },
+        {
+          "name": "destructive",
+          "description": "경고/에러 알림",
+          "props": {
+            "variant": "destructive"
+          }
+        }
+      ],
+      "usage": "<Alert>\n  <AlertTitle>알림</AlertTitle>\n  <AlertDescription>내용</AlertDescription>\n</Alert>"
+    },
+    {
+      "name": "Dialog",
+      "path": "/src/app/components/ui/dialog.tsx",
+      "description": "모달 대화 상자",
+      "category": "Overlay",
+      "subComponents": [
+        "DialogTrigger",
+        "DialogContent",
+        "DialogHeader",
+        "DialogTitle",
+        "DialogDescription",
+        "DialogFooter",
+        "DialogClose"
+      ],
+      "usage": "<Dialog>\n  <DialogTrigger asChild>\n    <Button>열기</Button>\n  </DialogTrigger>\n  <DialogContent>\n    <DialogHeader>\n      <DialogTitle>제목</DialogTitle>\n    </DialogHeader>\n  </DialogContent>\n</Dialog>"
+    },
+    {
+      "name": "Select",
+      "path": "/src/app/components/ui/select.tsx",
+      "description": "드롭다운 선택 메뉴",
+      "category": "Form",
+      "subComponents": [
+        "SelectTrigger",
+        "SelectValue",
+        "SelectContent",
+        "SelectItem",
+        "SelectLabel",
+        "SelectGroup"
+      ],
+      "usage": "<Select>\n  <SelectTrigger>\n    <SelectValue placeholder=\"선택\" />\n  </SelectTrigger>\n  <SelectContent>\n    <SelectItem value=\"1\">항목 1</SelectItem>\n  </SelectContent>\n</Select>"
+    },
+    {
+      "name": "Checkbox",
+      "path": "/src/app/components/ui/checkbox.tsx",
+      "description": "체크박스 입력",
+      "category": "Form",
+      "usage": "<Checkbox />"
+    },
+    {
+      "name": "Switch",
+      "path": "/src/app/components/ui/switch.tsx",
+      "description": "토글 스위치",
+      "category": "Form",
+      "usage": "<Switch />"
+    },
+    {
+      "name": "Tabs",
+      "path": "/src/app/components/ui/tabs.tsx",
+      "description": "탭 네비게이션",
+      "category": "Navigation",
+      "subComponents": [
+        "TabsList",
+        "TabsTrigger",
+        "TabsContent"
+      ],
+      "variants": [
+        {
+          "name": "default",
+          "description": "기본 탭",
+          "props": {
+            "variant": "default"
+          }
+        },
+        {
+          "name": "underline",
+          "description": "하단 밑줄 스타일 탭",
+          "props": {
+            "variant": "underline"
+          }
+        }
+      ],
+      "usage": "<Tabs defaultValue=\"tab1\">\n  <TabsList>\n    <TabsTrigger value=\"tab1\">탭 1</TabsTrigger>\n  </TabsList>\n  <TabsContent value=\"tab1\">내용</TabsContent>\n</Tabs>"
+    },
+    {
+      "name": "UnderlineTab",
+      "path": "/src/app/components/ui/tabs.tsx",
+      "description": "밑줄 스타일이 적용된 탭 컴포넌트",
+      "category": "Navigation",
+      "variants": [
+        {
+          "name": "46",
+          "description": "높이 46px 밑줄 탭",
+          "props": {
+            "variant": "underline",
+            "size": "46"
+          }
+        },
+        {
+          "name": "42",
+          "description": "높이 42px 밑줄 탭",
+          "props": {
+            "variant": "underline",
+            "size": "42"
+          }
+        }
+      ],
+      "usage": "<Tabs defaultValue=\"tab1\">\n  <TabsList variant=\"underline\">\n    <TabsTrigger variant=\"underline\" size=\"46\" value=\"tab1\">탭 1</TabsTrigger>\n  </TabsList>\n</Tabs>"
+    },
+    {
+      "name": "Table",
+      "path": "/src/app/components/ui/table.tsx",
+      "description": "데이터 테이블",
+      "category": "Display",
+      "subComponents": [
+        "TableHeader",
+        "TableBody",
+        "TableFooter",
+        "TableHead",
+        "TableRow",
+        "TableCell",
+        "TableCaption"
+      ],
+      "usage": "<Table>\n  <TableHeader>\n    <TableRow>\n      <TableHead>헤더</TableHead>\n    </TableRow>\n  </TableHeader>\n  <TableBody>\n    <TableRow>\n      <TableCell>데이터</TableCell>\n    </TableRow>\n  </TableBody>\n</Table>"
+    },
+    {
+      "name": "Tooltip",
+      "path": "/src/app/components/ui/tooltip.tsx",
+      "description": "호버 시 표시되는 툴팁",
+      "category": "Overlay",
+      "subComponents": [
+        "TooltipTrigger",
+        "TooltipContent",
+        "TooltipProvider"
+      ],
+      "usage": "<Tooltip>\n  <TooltipTrigger>호버</TooltipTrigger>\n  <TooltipContent>설명</TooltipContent>\n</Tooltip>"
+    },
+    {
+      "name": "Textarea",
+      "path": "/src/app/components/ui/textarea.tsx",
+      "description": "여러 줄 텍스트 입력",
+      "category": "Form",
+      "usage": "<Textarea placeholder=\"여러 줄 입력\" />"
+    },
+    {
+      "name": "Accordion",
+      "path": "/src/app/components/ui/accordion.tsx",
+      "description": "접고 펼칠 수 있는 아코디언",
+      "category": "Display",
+      "usage": "<Accordion type=\"single\" collapsible />"
+    },
+    {
+      "name": "Avatar",
+      "path": "/src/app/components/ui/avatar.tsx",
+      "description": "사용자 프로필 이미지",
+      "category": "Display",
+      "usage": "<Avatar />"
+    },
+    {
+      "name": "Breadcrumb",
+      "path": "/src/app/components/ui/breadcrumb.tsx",
+      "description": "경로 탐색 breadcrumb",
+      "category": "Navigation",
+      "usage": "<Breadcrumb />"
+    },
+    {
+      "name": "Calendar",
+      "path": "/src/app/components/ui/calendar.tsx",
+      "description": "날짜 선택 캘린더",
+      "category": "Form",
+      "usage": "<Calendar />"
+    },
+    {
+      "name": "Carousel",
+      "path": "/src/app/components/ui/carousel.tsx",
+      "description": "이미지/콘텐츠 캐러셀",
+      "category": "Display",
+      "usage": "<Carousel />"
+    },
+    {
+      "name": "Command",
+      "path": "/src/app/components/ui/command.tsx",
+      "description": "커맨드 팔레트",
+      "category": "Navigation",
+      "usage": "<Command />"
+    },
+    {
+      "name": "ContextMenu",
+      "path": "/src/app/components/ui/context-menu.tsx",
+      "description": "우클릭 컨텍스트 메뉴",
+      "category": "Overlay",
+      "usage": "<ContextMenu />"
+    },
+    {
+      "name": "Drawer",
+      "path": "/src/app/components/ui/drawer.tsx",
+      "description": "사이드 드로어",
+      "category": "Overlay",
+      "usage": "<Drawer />"
+    },
+    {
+      "name": "DropdownMenu",
+      "path": "/src/app/components/ui/dropdown-menu.tsx",
+      "description": "드롭다운 메뉴",
+      "category": "Overlay",
+      "usage": "<DropdownMenu />"
+    },
+    {
+      "name": "Form",
+      "path": "/src/app/components/ui/form.tsx",
+      "description": "폼 관리 (react-hook-form)",
+      "category": "Form",
+      "usage": "<Form />"
+    },
+    {
+      "name": "HoverCard",
+      "path": "/src/app/components/ui/hover-card.tsx",
+      "description": "호버 카드",
+      "category": "Overlay",
+      "usage": "<HoverCard />"
+    },
+    {
+      "name": "Label",
+      "path": "/src/app/components/ui/label.tsx",
+      "description": "폼 레이블",
+      "category": "Form",
+      "usage": "<Label />"
+    },
+    {
+      "name": "Menubar",
+      "path": "/src/app/components/ui/menubar.tsx",
+      "description": "메뉴바",
+      "category": "Navigation",
+      "usage": "<Menubar />"
+    },
+    {
+      "name": "NavigationMenu",
+      "path": "/src/app/components/ui/navigation-menu.tsx",
+      "description": "네비게이션 메뉴",
+      "category": "Navigation",
+      "usage": "<NavigationMenu />"
+    },
+    {
+      "name": "Pagination",
+      "path": "/src/app/components/ui/pagination.tsx",
+      "description": "페이지네이션",
+      "category": "Navigation",
+      "usage": "<Pagination />"
+    },
+    {
+      "name": "Popover",
+      "path": "/src/app/components/ui/popover.tsx",
+      "description": "팝오버",
+      "category": "Overlay",
+      "usage": "<Popover />"
+    },
+    {
+      "name": "Progress",
+      "path": "/src/app/components/ui/progress.tsx",
+      "description": "진행 바",
+      "category": "Feedback",
+      "usage": "<Progress />"
+    },
+    {
+      "name": "RadioGroup",
+      "path": "/src/app/components/ui/radio-group.tsx",
+      "description": "라디오 버튼 그룹",
+      "category": "Form",
+      "usage": "<RadioGroup />"
+    },
+    {
+      "name": "ScrollArea",
+      "path": "/src/app/components/ui/scroll-area.tsx",
+      "description": "스크롤 영역",
+      "category": "Layout",
+      "usage": "<ScrollArea />"
+    },
+    {
+      "name": "Separator",
+      "path": "/src/app/components/ui/separator.tsx",
+      "description": "구분선",
+      "category": "Layout",
+      "usage": "<Separator />"
+    },
+    {
+      "name": "Sheet",
+      "path": "/src/app/components/ui/sheet.tsx",
+      "description": "시트 (사이드 패널)",
+      "category": "Overlay",
+      "usage": "<Sheet />"
+    },
+    {
+      "name": "Sidebar",
+      "path": "/src/app/components/ui/sidebar.tsx",
+      "description": "사이드바",
+      "category": "Layout",
+      "usage": "<Sidebar />"
+    },
+    {
+      "name": "Skeleton",
+      "path": "/src/app/components/ui/skeleton.tsx",
+      "description": "로딩 스켈레톤",
+      "category": "Feedback",
+      "usage": "<Skeleton />"
+    },
+    {
+      "name": "Slider",
+      "path": "/src/app/components/ui/slider.tsx",
+      "description": "슬라이더",
+      "category": "Form",
+      "usage": "<Slider />"
+    },
+    {
+      "name": "Toggle",
+      "path": "/src/app/components/ui/toggle.tsx",
+      "description": "토글 버튼",
+      "category": "Form",
+      "usage": "<Toggle />"
+    },
+    {
+      "name": "ToggleGroup",
+      "path": "/src/app/components/ui/toggle-group.tsx",
+      "description": "토글 버튼 그룹",
+      "category": "Form",
+      "usage": "<ToggleGroup />"
+    }
+  ]
+}
