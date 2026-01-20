@@ -3,7 +3,7 @@ import * as React from "react";
 import { Badge } from "@/app/components/ui/badge";
 import { Button } from "@/app/components/ui/button";
 import { Tabs, TabsList, TabsTrigger } from "@/app/components/ui/tabs";
-import { ChevronLeft, ChevronRight, Plus } from "@/app/icons/lucide";
+import { ChevronDown, ChevronLeft, Plus } from "@/app/icons/lucide";
 import { cn } from "@/lib/utils";
 
 type ContentAreaTab = {
@@ -68,13 +68,13 @@ export function ContentAreaHeader({
           <div className="flex min-w-0 flex-1 items-center gap-1">
             {showLeadingIcon ? (
               <span className="flex h-7 w-7 items-center justify-center">
-                {leadingIcon ?? <ChevronLeft className="h-4 w-4 text-foreground" />}
+                {leadingIcon ?? <ChevronLeft className="h-7 w-7 text-foreground" />}
               </span>
             ) : null}
             <div className="min-w-0 text-lg font-bold leading-7 text-foreground">{title}</div>
             {showTrailingIcon ? (
               <span className="flex h-7 w-7 items-center justify-center">
-                {trailingIcon ?? <ChevronRight className="h-4 w-4 text-foreground" />}
+                {trailingIcon ?? <ChevronDown className="h-7 w-7 text-foreground" />}
               </span>
             ) : null}
             {badgeLabel ? (
@@ -102,7 +102,7 @@ export function ContentAreaHeader({
 
         {tabs.length ? (
           <Tabs value={resolvedActiveTab} onValueChange={onTabChange}>
-            <TabsList variant="underline" className="w-full px-5">
+            <TabsList variant="underline" className="w-full px-2.5">
               {tabs.map((tab) => (
                 <TabsTrigger
                   key={tab.value}
@@ -110,11 +110,11 @@ export function ContentAreaHeader({
                   size="46"
                   value={tab.value}
                   disabled={tab.disabled}
-                  className="text-sm font-normal data-[state=active]:border-foreground data-[state=active]:text-foreground data-[state=active]:font-bold"
                 >
                   {tab.label}
                 </TabsTrigger>
               ))}
+              <span aria-hidden className="flex-1 self-end border-b border-border" />
             </TabsList>
           </Tabs>
         ) : null}
@@ -139,7 +139,7 @@ export function ContentAreaHeaderTemplate() {
     <div className="flex w-full flex-col gap-6 bg-canvas-100 p-6">
       <section className="grid gap-2">
         <h3 className="text-sm font-medium text-mutedForeground">Contents Area Header</h3>
-        <div className="overflow-hidden rounded-card border border-border bg-background">
+        <div className="overflow-hidden rounded-card bg-background">
           <ContentAreaHeader
             title="Title"
             showLeadingIcon

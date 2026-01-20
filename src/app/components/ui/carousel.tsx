@@ -3,6 +3,7 @@ import useEmblaCarousel from "embla-carousel-react";
 import type { EmblaCarouselType } from "embla-carousel";
 
 import { cn } from "../../lib/utils";
+import { ChevronLeft, ChevronRight } from "@/app/icons/lucide";
 import { buttonVariants } from "./button";
 
 type CarouselApi = EmblaCarouselType | undefined;
@@ -74,7 +75,7 @@ export function CarouselPrevious({ className, ...props }: React.ButtonHTMLAttrib
       aria-label="Previous"
       {...props}
     >
-      Prev
+      <ChevronLeft className="h-4 w-4 text-foreground" />
     </button>
   );
 }
@@ -90,7 +91,7 @@ export function CarouselNext({ className, ...props }: React.ButtonHTMLAttributes
       aria-label="Next"
       {...props}
     >
-      Next
+      <ChevronRight className="h-4 w-4 text-foreground" />
     </button>
   );
 }

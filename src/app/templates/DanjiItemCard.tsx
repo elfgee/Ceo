@@ -50,26 +50,35 @@ export function DanjiItemCard({
   onCloseItem
 }: DanjiItemCardProps) {
   return (
-    <Card className={cn("w-full max-w-md", className)}>
+    <Card className={cn("w-full max-w-[510px]", className)}>
       <CardHeader className="p-5">
         <div className="flex items-start gap-4">
           <CardImage src={imageSrc} />
 
           <div className="min-w-0 flex-1">
-            <div className="flex items-start justify-between gap-2">
-              <div className="min-w-0">
-                <div className="flex items-center gap-1">
+            <div className="flex items-start gap-2 w-[354px]">
+              <div className="min-w-0 flex-1">
+                <div className="flex items-center gap-1 min-w-0">
                   <span className="shrink-0 text-base font-bold leading-6 text-primary">N</span>
-                  <span className="truncate text-sm leading-5 text-foreground">{danjiName}</span>
+                  <span className="block min-w-0 flex-1 truncate text-sm leading-5 text-foreground">
+                    {danjiName}
+                  </span>
                 </div>
                 <div className="truncate text-base font-bold leading-6 text-foreground">{priceLabel}</div>
               </div>
 
               {needsCheck ? (
-                <Badge variant="destructive" size="28" shape="round" className="gap-1">
-                  <AlertCircle className="h-4 w-4" />
-                  <span className="text-xs font-normal leading-4">확인 필요</span>
-                </Badge>
+                <div className="ml-auto flex items-start">
+                  <Badge
+                    variant="destructive"
+                    size="28"
+                    shape="round"
+                    className="shrink-0 justify-start gap-1"
+                  >
+                    <AlertCircle className="h-4 w-4" />
+                    <span className="text-xs font-normal leading-4">확인 필요</span>
+                  </Badge>
+                </div>
               ) : null}
             </div>
 

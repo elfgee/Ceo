@@ -78,6 +78,72 @@ export const LNB_BY_GNB: Record<string, { title: string; items: SideNavItem[] }>
       { id: "fake-ads-out-restrictions", label: "전체 중개사무소 제한조치 현황", to: "/fake-ads-out/restrictions" },
       { id: "fake-ads-out-policy", label: "안심 운영 정책", to: "/fake-ads-out/policy" }
     ]
+  },
+  "/design-system": {
+    title: "Design System",
+    items: [
+      {
+        id: "ds-components",
+        label: "Components",
+        to: "/design-system/components",
+        children: [
+          { id: "ds-accordion", label: "Accordion", to: "/design-system/components/accordion" },
+          { id: "ds-avatar", label: "Avatar", to: "/design-system/components/avatar" },
+          { id: "ds-badge", label: "Badge", to: "/design-system/components/badge" },
+          { id: "ds-breadcrumb", label: "Breadcrumb", to: "/design-system/components/breadcrumb" },
+          { id: "ds-button", label: "Button", to: "/design-system/components/button" },
+          { id: "ds-calendar", label: "Calendar", to: "/design-system/components/calendar" },
+          { id: "ds-card", label: "Card", to: "/design-system/components/card" },
+          { id: "ds-carousel", label: "Carousel", to: "/design-system/components/carousel" },
+          { id: "ds-checkbox", label: "Checkbox", to: "/design-system/components/checkbox" },
+          { id: "ds-dialog", label: "Dialog", to: "/design-system/components/dialog" },
+          { id: "ds-drawer", label: "Drawer", to: "/design-system/components/drawer" },
+          { id: "ds-form", label: "Form", to: "/design-system/components/form" },
+          { id: "ds-input", label: "Input", to: "/design-system/components/input" },
+          { id: "ds-label", label: "Label", to: "/design-system/components/label" },
+          { id: "ds-pagination", label: "Pagination", to: "/design-system/components/pagination" },
+          { id: "ds-popover", label: "Popover", to: "/design-system/components/popover" },
+          { id: "ds-progress", label: "Progress", to: "/design-system/components/progress" },
+          { id: "ds-radio-group", label: "RadioGroup", to: "/design-system/components/radio-group" },
+          { id: "ds-scroll-area", label: "ScrollArea", to: "/design-system/components/scroll-area" },
+          { id: "ds-select", label: "Select", to: "/design-system/components/select" },
+          { id: "ds-separator", label: "Separator", to: "/design-system/components/separator" },
+          { id: "ds-sheet", label: "Sheet", to: "/design-system/components/sheet" },
+          { id: "ds-skeleton", label: "Skeleton", to: "/design-system/components/skeleton" },
+          { id: "ds-slider", label: "Slider", to: "/design-system/components/slider" },
+          { id: "ds-switch", label: "Switch", to: "/design-system/components/switch" },
+          { id: "ds-table", label: "Table", to: "/design-system/components/table" },
+          { id: "ds-tabs", label: "Tabs", to: "/design-system/components/tabs" },
+          { id: "ds-tabs-underline", label: "Tabs Underline", to: "/design-system/components/tabs-underline" },
+          { id: "ds-textarea", label: "Textarea", to: "/design-system/components/textarea" },
+          { id: "ds-toast-sonnar", label: "Toast/Sonnar", to: "/design-system/components/alert" },
+          { id: "ds-toggle", label: "Toggle", to: "/design-system/components/toggle" },
+          { id: "ds-toggle-group", label: "ToggleGroup", to: "/design-system/components/toggle-group" },
+          { id: "ds-tooltip", label: "Tooltip", to: "/design-system/components/tooltip" }
+        ]
+      },
+      {
+        id: "ds-foundation",
+        label: "Foundation",
+        to: "/design-system/foundation",
+        children: [
+          { id: "ds-colors", label: "Colors", to: "/design-system/foundation/colors" },
+          { id: "ds-typography", label: "Typography", to: "/design-system/foundation/typography" },
+          { id: "ds-spacing", label: "Spacing & Radius", to: "/design-system/foundation/spacing" }
+        ]
+      },
+      {
+        id: "ds-templates",
+        label: "Templates",
+        to: "/design-system/templates",
+        children: [
+          { id: "ds-content-area-header", label: "ContentAreaHeader", to: "/design-system/templates/content-area-header" },
+          { id: "ds-gnb", label: "Gnb", to: "/design-system/templates/gnb" },
+          { id: "ds-side-menu-bar", label: "SideMenuBar", to: "/design-system/templates/side-menu-bar" },
+          { id: "ds-danji-item-card", label: "DanjiItemCard", to: "/design-system/templates/danji-item-card" }
+        ]
+      }
+    ]
   }
 };
 

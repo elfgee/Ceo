@@ -109,7 +109,7 @@ export function Gnb({ activeItem = "광고관리(등록)", items, mode = "auto",
       <header className={cn("w-full border-b border-border bg-background", className)}>
       {/* Mobile */}
       {showMobile ? (
-        <div className={cn("md:hidden")}>
+        <div className={cn(mode === "mobile" ? "" : "md:hidden")}>
           <div className="mx-auto flex h-14 max-w-[1920px] items-center justify-between px-4">
             <Logo />
             <button

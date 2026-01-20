@@ -9,8 +9,8 @@ export const Tabs = TabsPrimitive.Root;
 const tabsListVariants = cva("inline-flex items-center", {
   variants: {
     variant: {
-      default: "h-10 rounded-button bg-muted p-1 text-mutedForeground",
-      underline: "h-10 w-full justify-start gap-1 border-b border-border bg-background"
+      default: "gap-1",
+      underline: "w-full justify-start gap-0 bg-background"
     }
   },
   defaultVariants: {
@@ -30,14 +30,14 @@ export const TabsList = React.forwardRef<React.ElementRef<typeof TabsPrimitive.L
 TabsList.displayName = TabsPrimitive.List.displayName;
 
 const tabsTriggerVariants = cva(
-  "inline-flex items-center justify-center whitespace-nowrap font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50",
+  "inline-flex items-center justify-center whitespace-nowrap transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50",
   {
     variants: {
       variant: {
         default:
-          "h-8 rounded-button px-3 text-sm text-mutedForeground data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm",
+          "rounded-button px-3 py-1.5 text-sm font-medium text-secondaryForeground data-[state=active]:bg-zigbangOrange50 data-[state=active]:text-zigbangOrange600 data-[state=active]:shadow-sm",
         underline:
-          "rounded-none border-b-2 border-transparent px-3 text-sm text-mutedForeground data-[state=active]:border-primary data-[state=active]:text-foreground"
+          "items-end rounded-none border-b border-transparent px-2.5 py-[11px] text-sm font-normal leading-5 text-mutedForeground data-[state=active]:-mb-px data-[state=active]:border-b-2 data-[state=active]:!border-foreground data-[state=active]:!text-foreground data-[state=active]:font-bold"
       },
       size: {
         "46": "h-[46px]",
