@@ -63,13 +63,13 @@ function MenuItem({
     <button
       type="button"
       className={cn(
-        "flex h-14 items-center justify-center px-3 text-sm transition-colors hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring md:h-[66px]",
+        "flex h-14 items-center justify-center px-3 text-sm text-foreground transition-colors hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring md:h-[66px]",
         className
       )}
       onClick={onClick}
     >
       {hasIcon ? <Menu className="mr-1 h-5 w-5 text-foreground" /> : null}
-      <span className={cn("leading-[18px] text-foreground", isActive ? "font-bold" : "font-normal")}>{label}</span>
+      <span className={cn("leading-[18px]", isActive ? "font-bold" : "font-normal")}>{label}</span>
       {hasExternalLink ? <ExternalLink className="ml-1 h-4 w-4 text-mutedForeground" /> : null}
     </button>
   );
@@ -237,14 +237,14 @@ export function GnbTemplate() {
   return (
     <div className="flex w-full flex-col gap-10 bg-canvas-100 p-8">
       <section className="grid gap-2">
-        <h3 className="text-sm font-medium text-mutedForeground">Variant 1: Desktop (Default Active)</h3>
+        <h3 className="text-sm font-medium text-mutedForeground">Variant 1: Desktop (sign-out)</h3>
         <div className="overflow-hidden rounded-card border border-border bg-background">
-          <Gnb mode="desktop" activeItem="광고관리(등록)" />
+          <Gnb mode="desktop" activeItem="홈" items={["홈", "상품소개", "허위광고OUT", "DS"]} />
         </div>
       </section>
 
       <section className="grid gap-2">
-        <h3 className="text-sm font-medium text-mutedForeground">Variant 2: Desktop (Home Active)</h3>
+        <h3 className="text-sm font-medium text-mutedForeground">Variant 2: Desktop (sign-in)</h3>
         <div className="overflow-hidden rounded-card border border-border bg-background">
           <Gnb mode="desktop" activeItem="홈" />
         </div>

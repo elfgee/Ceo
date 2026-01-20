@@ -13,14 +13,14 @@ export function TemplateGnb() {
 
       <div className="flex flex-col gap-6">
         <section className="flex flex-col gap-4">
-          <h2 className="text-lg font-bold leading-7 text-foreground">Desktop Mode (Default Active)</h2>
+          <h2 className="text-lg font-bold leading-7 text-foreground">Desktop (sign-out)</h2>
           <div className="overflow-hidden rounded-[6px] border border-border bg-background">
-            <Gnb mode="desktop" activeItem="광고관리" />
+            <Gnb mode="desktop" activeItem="홈" items={["홈", "상품소개", "허위광고OUT", "DS"]} />
           </div>
         </section>
 
         <section className="flex flex-col gap-4">
-          <h2 className="text-lg font-bold leading-7 text-foreground">Desktop Mode (Home Active)</h2>
+          <h2 className="text-lg font-bold leading-7 text-foreground">Desktop (sign-in)</h2>
           <div className="overflow-hidden rounded-[6px] border border-border bg-background">
             <Gnb mode="desktop" activeItem="홈" />
           </div>
