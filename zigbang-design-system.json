@@ -241,6 +241,25 @@
       "path": "/src/app/components/ui/select.tsx",
       "description": "드롭다운 선택 메뉴",
       "category": "Form",
+      "variants": [
+        {
+          "name": "search",
+          "description": "검색 가능한 셀렉트",
+          "props": {
+            "mode": "search"
+          }
+        },
+        {
+          "name": "multiple",
+          "description": "복수 선택 가능한 셀렉트",
+          "props": {
+            "mode": "multiple",
+            "multipleValues": "string[]",
+            "defaultMultipleValues": "string[]",
+            "onMultipleValuesChange": "function"
+          }
+        }
+      ],
       "subComponents": [
         "SelectTrigger",
         "SelectValue",

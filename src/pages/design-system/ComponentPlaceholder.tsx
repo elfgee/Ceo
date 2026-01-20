@@ -620,12 +620,38 @@ export function ComponentPlaceholder({ name }: { name: string }) {
             <ExampleSection title="기본" containerClassName="justify-start">
               <Select defaultValue="option-1">
                 <SelectTrigger className="w-48">
-                  <SelectValue placeholder="선택하세요" />
+                  <SelectValue placeholder="선택해주세요" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="option-1">옵션 1</SelectItem>
-                  <SelectItem value="option-2">옵션 2</SelectItem>
-                  <SelectItem value="option-3">옵션 3</SelectItem>
+                  <SelectItem value="apartment">아파트</SelectItem>
+                  <SelectItem value="oneroom">원룸</SelectItem>
+                  <SelectItem value="officetel">오피스텔</SelectItem>
+                </SelectContent>
+              </Select>
+            </ExampleSection>
+            <ExampleSection title="검색" containerClassName="justify-start">
+              <Select mode="search">
+                <SelectTrigger className="w-48">
+                  <SelectValue placeholder="선택해주세요" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="danji-101">래미안</SelectItem>
+                  <SelectItem value="danji-102">자이</SelectItem>
+                  <SelectItem value="danji-103">힐스테이트</SelectItem>
+                  <SelectItem value="danji-104">더샵</SelectItem>
+                  <SelectItem value="danji-105">푸르지오</SelectItem>
+                </SelectContent>
+              </Select>
+            </ExampleSection>
+            <ExampleSection title="멀티 선택" containerClassName="justify-start">
+              <Select mode="multiple">
+                <SelectTrigger className="w-48">
+                  <SelectValue placeholder="선택해주세요" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="seoul">서울</SelectItem>
+                  <SelectItem value="gyeonggi">경기</SelectItem>
+                  <SelectItem value="incheon">인천</SelectItem>
                 </SelectContent>
               </Select>
             </ExampleSection>

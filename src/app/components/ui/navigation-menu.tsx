@@ -1,6 +1,7 @@
 import * as React from "react";
 import * as NavigationMenuPrimitive from "@radix-ui/react-navigation-menu";
 
+import { ChevronDown } from "@/app/icons/lucide";
 import { cn } from "../../lib/utils";
 
 export const NavigationMenu = React.forwardRef<
@@ -45,7 +46,7 @@ export const NavigationMenuTrigger = React.forwardRef<
     {...props}
   >
     {children}
-    <span className="ml-1 text-mutedForeground">▾</span>
+    <ChevronDown className="ml-1 h-4 w-4 text-mutedForeground" />
   </NavigationMenuPrimitive.Trigger>
 ));
 NavigationMenuTrigger.displayName = NavigationMenuPrimitive.Trigger.displayName;
