@@ -7,7 +7,7 @@ import { Separator } from "@/app/components/ui/separator";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/app/components/ui/accordion";
 import { CHAT_GNB_LABEL } from "@/app/routes/nav";
 
-const DEFAULT_ITEMS = ["홈", "광고관리", "상품소개", "허위광고OUT", "마이페이지", "채팅"] as const;
+const DEFAULT_ITEMS = ["홈", "광고관리", "상품소개", "허위광고OUT", "마이페이지", "채팅", "DS"] as const;
 
 export type GnbMode = "auto" | "desktop" | "mobile";
 

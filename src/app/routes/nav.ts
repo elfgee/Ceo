@@ -8,6 +8,7 @@ export const GNB_ROUTES = {
   "상품소개": "/products",
   "마이페이지": "/mypage",
   "허위광고OUT": "/fake-ads-out",
+  "DS": "/design-system",
   [CHAT_GNB_LABEL]: "__external__"
 } as const;
 

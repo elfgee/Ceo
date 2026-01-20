@@ -164,7 +164,8 @@ function AppLayout() {
       "/products": "상품소개",
       "/ads": "광고관리",
       "/mypage": "마이페이지",
-      "/fake-ads-out": "허위광고OUT"
+      "/fake-ads-out": "허위광고OUT",
+      "/design-system": "DS"
     }).find(([p]) => p === base)?.[1] ?? "홈";
 
   return (
