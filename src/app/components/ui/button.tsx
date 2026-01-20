@@ -9,7 +9,7 @@ export const buttonVariants = cva(
     variants: {
       variant: {
         default: "bg-primary text-primaryForeground hover:bg-zigbangOrange700",
-        destructive: "bg-destructive text-destructiveForeground hover:bg-destructive",
+        destructive: "bg-destructive text-destructiveForeground hover:bg-destructiveHover",
         outline: "border border-border bg-background text-foreground hover:bg-grey-100",
         secondary: "bg-secondary text-secondaryForeground hover:bg-grey-100",
         ghost: "text-foreground hover:bg-grey-100",
@@ -35,8 +35,10 @@ export interface ButtonProps
     VariantProps<typeof buttonVariants> {}
 
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, type = "button", ...props }, ref) => {
-    return <button ref={ref} type={type} className={cn(buttonVariants({ variant }), className)} {...props} />;
+  ({ className, variant, size, type = "button", ...props }, ref) => {
+    return (
+      <button ref={ref} type={type} className={cn(buttonVariants({ variant, size }), className)} {...props} />
+    );
   }
 );
 Button.displayName = "Button";
