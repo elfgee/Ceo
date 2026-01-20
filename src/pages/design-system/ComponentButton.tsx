@@ -40,6 +40,28 @@ export function ComponentButton() {
         </section>
 
         <section className="flex flex-col gap-4">
+          <h2 className="text-lg font-bold leading-7 text-foreground">Sizes</h2>
+          <div className="flex flex-wrap items-center gap-4 p-6 border border-border rounded-[6px] bg-background">
+            <Button size="xsmall">XSmall</Button>
+            <Button size="small">Small</Button>
+            <Button size="default">Default</Button>
+            <Button size="large">Large</Button>
+          </div>
+        </section>
+
+        <section className="flex flex-col gap-4">
+          <h2 className="text-lg font-bold leading-7 text-foreground">Icon Only</h2>
+          <div className="flex flex-wrap items-center gap-4 p-6 border border-border rounded-[6px] bg-background">
+            <Button size="icon" aria-label="더보기">
+              <Plus className="h-4 w-4" />
+            </Button>
+            <Button size="icon" variant="outline" aria-label="더보기">
+              <Plus className="h-4 w-4" />
+            </Button>
+          </div>
+        </section>
+
+        <section className="flex flex-col gap-4">
           <h2 className="text-lg font-bold leading-7 text-foreground">Disabled</h2>
           <div className="flex flex-wrap items-center gap-4 p-6 border border-border rounded-[6px] bg-background">
             <Button disabled>Disabled</Button>

@@ -329,7 +329,7 @@ export function Restrictions() {
                       className={cn(
                         "min-w-[40px] min-h-[40px] px-4 py-2 rounded-[6px] flex justify-center items-center text-sm font-medium leading-5 transition-colors",
                         currentPage === page
-                          ? "bg-background border border-input text-secondaryForeground"
+                          ? "bg-background border border-inputBorder text-secondaryForeground"
                           : "text-foreground hover:bg-muted"
                       )}
                     >

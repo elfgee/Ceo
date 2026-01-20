@@ -19,9 +19,51 @@
     "grey-700": "rgba(55, 65, 81, 1.00)",
     "grey-800": "rgba(31, 41, 55, 1.00)",
     "grey-900": "rgba(17, 24, 39, 1.00)",
+    "slate-50": "rgba(248, 250, 252, 1.00)",
+    "slate-100": "rgba(241, 245, 249, 1.00)",
+    "slate-200": "rgba(226, 232, 240, 1.00)",
+    "slate-300": "rgba(203, 213, 225, 1.00)",
+    "slate-400": "rgba(148, 163, 184, 1.00)",
+    "slate-500": "rgba(100, 116, 139, 1.00)",
+    "slate-600": "rgba(71, 85, 105, 1.00)",
+    "slate-700": "rgba(51, 65, 85, 1.00)",
+    "slate-800": "rgba(30, 41, 59, 1.00)",
+    "slate-900": "rgba(15, 23, 42, 1.00)",
+    "neutral-50": "rgba(250, 250, 250, 1.00)",
+    "neutral-100": "rgba(245, 245, 245, 1.00)",
+    "neutral-200": "rgba(229, 229, 229, 1.00)",
+    "neutral-300": "rgba(212, 212, 212, 1.00)",
+    "neutral-400": "rgba(163, 163, 163, 1.00)",
+    "neutral-500": "rgba(115, 115, 115, 1.00)",
+    "neutral-600": "rgba(82, 82, 82, 1.00)",
+    "neutral-700": "rgba(64, 64, 64, 1.00)",
+    "neutral-800": "rgba(38, 38, 38, 1.00)",
+    "neutral-900": "rgba(23, 23, 23, 1.00)",
+    "red-50": "rgba(255, 236, 235, 1.00)",
+    "red-100": "rgba(250, 212, 207, 1.00)",
+    "red-200": "rgba(252, 190, 190, 1.00)",
+    "red-300": "rgba(255, 150, 150, 1.00)",
+    "red-400": "rgba(253, 104, 94, 1.00)",
+    "red-500": "rgba(250, 78, 62, 1.00)",
+    "red-600": "rgba(237, 58, 60, 1.00)",
+    "red-700": "rgba(209, 20, 3, 1.00)",
+    "red-800": "rgba(175, 1, 1, 1.00)",
+    "red-900": "rgba(132, 2, 2, 1.00)",
+    "blue-50": "rgba(235, 245, 255, 1.00)",
+    "blue-100": "rgba(220, 237, 255, 1.00)",
+    "blue-200": "rgba(187, 220, 255, 1.00)",
+    "blue-300": "rgba(137, 195, 255, 1.00)",
+    "blue-400": "rgba(97, 176, 255, 1.00)",
+    "blue-500": "rgba(55, 152, 250, 1.00)",
+    "blue-600": "rgba(0, 120, 241, 1.00)",
+    "blue-700": "rgba(2, 95, 210, 1.00)",
+    "blue-800": "rgba(1, 63, 180, 1.00)",
+    "blue-900": "rgba(10, 55, 145, 1.00)",
     "primary": "rgba(255, 105, 5, 1.00)",
+    "primaryHover": "rgba(228, 91, 0, 1.00)",
     "primaryForeground": "rgba(255, 255, 255, 1.00)",
     "secondary": "rgba(245, 245, 245, 1.00)",
+    "secondaryHover": "rgba(229, 229, 229, 1.00)",
     "secondaryForeground": "rgba(55, 65, 81, 1.00)",
     "zigbangOrange50": "rgba(255, 247, 240, 1.00)",
     "zigbangOrange100": "rgba(255, 232, 217, 1.00)",
@@ -33,7 +75,17 @@
     "zigbangOrange700": "rgba(228, 91, 0, 1.00)",
     "zigbangOrange800": "rgba(140, 58, 3, 1.00)",
     "zigbangOrange900": "rgba(102, 42, 2, 1.00)",
+    "zigbangNavy50": "rgba(245, 247, 250, 1.00)",
+    "zigbangNavy100": "rgba(228, 235, 242, 1.00)",
+    "zigbangNavy200": "rgba(188, 204, 224, 1.00)",
+    "zigbangNavy300": "rgba(131, 171, 224, 1.00)",
+    "zigbangNavy400": "rgba(88, 138, 208, 1.00)",
+    "zigbangNavy500": "rgba(37, 89, 154, 1.00)",
+    "zigbangNavy600": "rgba(9, 44, 89, 1.00)",
+    "zigbangAptPro": "rgba(2, 95, 210, 1.00)",
+    "zigbangZikim": "rgba(0, 157, 65, 1.00)",
     "destructive": "rgba(237, 58, 60, 1.00)",
+    "destructiveHover": "rgba(185, 28, 28, 1.00)",
     "destructiveForeground": "rgba(255, 255, 255, 1.00)",
     "background": "rgba(255, 255, 255, 1.00)",
     "foreground": "rgba(31, 41, 55, 1.00)",
@@ -46,7 +98,7 @@
     "accent": "rgba(255, 247, 240, 1.00)",
     "accentForeground": "rgba(228, 91, 0, 1.00)",
     "border": "rgba(229, 231, 235, 1.00)",
-    "input": "rgba(255, 255, 255, 1.00)",
+    "inputBorder": "rgba(209, 213, 219, 1.00)",
     "inputBackground": "rgba(255, 255, 255, 1.00)",
     "ring": "rgba(0, 120, 241, 1.00)"
   },
@@ -120,6 +172,41 @@
           "description": "링크 스타일 버튼",
           "props": {
             "variant": "link"
+          }
+        },
+        {
+          "name": "xsmall",
+          "description": "높이 32px 버튼",
+          "props": {
+            "size": "xsmall"
+          }
+        },
+        {
+          "name": "small",
+          "description": "높이 36px 버튼",
+          "props": {
+            "size": "small"
+          }
+        },
+        {
+          "name": "default-size",
+          "description": "높이 40px 버튼",
+          "props": {
+            "size": "default"
+          }
+        },
+        {
+          "name": "large",
+          "description": "높이 44px 버튼",
+          "props": {
+            "size": "large"
+          }
+        },
+        {
+          "name": "icon",
+          "description": "40x40 아이콘 전용 버튼",
+          "props": {
+            "size": "icon"
           }
         }
       ],
