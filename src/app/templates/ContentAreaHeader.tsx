@@ -78,7 +78,7 @@ export function ContentAreaHeader({
               </span>
             ) : null}
             {badgeLabel ? (
-              <Badge variant="default" size="28" shape="round">
+              <Badge variant="default">
                 {badgeLabel}
               </Badge>
             ) : null}
