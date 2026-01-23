@@ -123,4 +123,8 @@ body {
   font-family: Pretendard, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
 }
 
+/* Table view spacing with pagination */
+.table-pagination {
+  margin-top: 30px;
+}
 

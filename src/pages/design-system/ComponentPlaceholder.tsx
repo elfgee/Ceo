@@ -1,4 +1,5 @@
 import * as React from "react";
+import { type DateRange } from "react-day-picker";
 import { useForm } from "react-hook-form";
 
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/app/components/ui/accordion";
@@ -153,6 +154,10 @@ function ExampleFallback() {
 
 export function ComponentPlaceholder({ name }: { name: string }) {
   const [selectedDate, setSelectedDate] = React.useState<Date | undefined>(new Date());
+  const [selectedRange, setSelectedRange] = React.useState<DateRange | undefined>({
+    from: new Date(2024, 2, 2),
+    to: new Date(2024, 2, 15)
+  });
   const form = useForm<{ email: string }>({
     defaultValues: { email: "" }
   });
@@ -253,12 +258,34 @@ export function ComponentPlaceholder({ name }: { name: string }) {
       case "Calendar":
         return (
           <div className="flex flex-col gap-6">
-            <ExampleSection title="단일 선택" containerClassName="justify-center">
+            <ExampleSection title="기간 선택" containerClassName="flex-col items-center gap-6">
+              <Calendar
+                mode="range"
+                numberOfMonths={2}
+                defaultMonth={selectedRange?.from}
+                selected={selectedRange}
+                onSelect={setSelectedRange}
+                className="rounded-[6px] border border-border bg-background"
+                classNames={{
+                  months: "flex flex-col gap-4 md:flex-row md:gap-6"
+                }}
+              />
+            </ExampleSection>
+            <ExampleSection title="연/월 선택" containerClassName="flex-col items-center gap-6">
               <Calendar
                 mode="single"
                 selected={selectedDate}
                 onSelect={setSelectedDate}
-                className="rounded-card border border-border bg-background"
+                captionLayout="dropdown"
+                className="rounded-[6px] border border-border bg-background"
+              />
+            </ExampleSection>
+            <ExampleSection title="일자 선택" containerClassName="flex-col items-center gap-6">
+              <Calendar
+                mode="single"
+                selected={selectedDate}
+                onSelect={setSelectedDate}
+                className="rounded-[6px] border border-border bg-background"
               />
             </ExampleSection>
           </div>
@@ -488,6 +515,10 @@ export function ComponentPlaceholder({ name }: { name: string }) {
             <ExampleSection title="기본" containerClassName="flex-col items-stretch">
               <Input placeholder="입력하세요" />
               <Input placeholder="비활성화" disabled />
+              <div className="flex w-full flex-col gap-1">
+                <Input placeholder="오류 상태" aria-invalid="true" />
+                <p className="text-xs leading-4 text-destructive">필수 입력 항목입니다.</p>
+              </div>
             </ExampleSection>
           </div>
         );
@@ -652,6 +683,12 @@ export function ComponentPlaceholder({ name }: { name: string }) {
                   <SelectItem value="seoul">서울</SelectItem>
                   <SelectItem value="gyeonggi">경기</SelectItem>
                   <SelectItem value="incheon">인천</SelectItem>
+                  <SelectItem value="busan">부산</SelectItem>
+                  <SelectItem value="daegu">대구</SelectItem>
+                  <SelectItem value="gwangju">광주</SelectItem>
+                  <SelectItem value="daejeon">대전</SelectItem>
+                  <SelectItem value="ulsan">울산</SelectItem>
+                  <SelectItem value="sejong">세종</SelectItem>
                 </SelectContent>
               </Select>
             </ExampleSection>
