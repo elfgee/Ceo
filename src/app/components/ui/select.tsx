@@ -13,6 +13,8 @@ const SelectMultipleContext = React.createContext<{
   toggleValue: (value: string) => void;
   isSelected: (value: string) => boolean;
   markPreventClose: () => void;
+  registerLabel: (value: string, label: string) => void;
+  getLabel: (value: string) => string | undefined;
 } | null>(null);
 
 export type SelectProps = React.ComponentPropsWithoutRef<typeof SelectPrimitive.Root> & {
@@ -33,6 +35,8 @@ export function Select({
   const isMultiple = mode === "multiple";
   const [internalValues, setInternalValues] = React.useState<string[]>(defaultMultipleValues ?? []);
   const values = multipleValues ?? internalValues;
+  const [valueLabels, setValueLabels] = React.useState<Record<string, string>>({});
+  const staticLabelMap = React.useMemo(() => collectSelectItemLabels(children), [children]);
   const [internalOpen, setInternalOpen] = React.useState(false);
   const preventCloseRef = React.useRef(false);
   const open = props.open ?? internalOpen;
@@ -63,9 +67,19 @@ export function Select({
     preventCloseRef.current = true;
   }, []);
 
+  const registerLabel = React.useCallback((value: string, label: string) => {
+    if (!value) return;
+    setValueLabels((prev) => (prev[value] === label ? prev : { ...prev, [value]: label }));
+  }, []);
+
+  const getLabel = React.useCallback(
+    (value: string) => valueLabels[value] ?? staticLabelMap[value],
+    [staticLabelMap, valueLabels]
+  );
+
   const multipleContextValue = React.useMemo(
-    () => ({ values, toggleValue, isSelected, markPreventClose }),
-    [isSelected, markPreventClose, toggleValue, values]
+    () => ({ values, toggleValue, isSelected, markPreventClose, registerLabel, getLabel }),
+    [getLabel, isSelected, markPreventClose, registerLabel, toggleValue, values]
   );
 
   return (
@@ -98,7 +112,33 @@ export function Select({
 }
 
 export const SelectGroup = SelectPrimitive.Group;
-export const SelectValue = SelectPrimitive.Value;
+export function SelectValue({
+  className,
+  placeholder,
+  ...props
+}: React.ComponentPropsWithoutRef<typeof SelectPrimitive.Value>) {
+  const mode = React.useContext(SelectModeContext);
+  const multipleContext = React.useContext(SelectMultipleContext);
+  const isMultiple = mode === "multiple";
+  const values = multipleContext?.values ?? [];
+  const labels = values
+    .map((value) => multipleContext?.getLabel(value) ?? value)
+    .filter((label) => Boolean(label));
+  const displayText = labels.join(", ");
+  const showPlaceholder = !displayText && placeholder;
+
+  if (!isMultiple) {
+    return <SelectPrimitive.Value className={className} placeholder={placeholder} {...props} />;
+  }
+
+  return (
+    <SelectPrimitive.Value asChild>
+      <span className={cn("block truncate text-left", showPlaceholder && "text-mutedForeground", className)}>
+        {displayText || placeholder}
+      </span>
+    </SelectPrimitive.Value>
+  );
+}
 
 export const SelectTrigger = React.forwardRef<
   React.ElementRef<typeof SelectPrimitive.Trigger>,
@@ -107,13 +147,13 @@ export const SelectTrigger = React.forwardRef<
   <SelectPrimitive.Trigger
     ref={ref}
     className={cn(
-      "flex h-10 w-full items-center justify-between rounded border border-inputBorder bg-inputBackground px-3 py-2 text-sm text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50",
+      "flex h-10 w-full items-center gap-2 rounded border border-inputBorder bg-inputBackground px-3 py-2 text-left text-sm text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50",
       className
     )}
     {...props}
   >
-    {children}
-    <ChevronDown className="ml-2 h-4 w-4 text-mutedForeground" />
+    <span className="min-w-0 flex-1 truncate text-left">{children}</span>
+    <ChevronDown className="ml-auto h-4 w-4 text-mutedForeground" />
   </SelectPrimitive.Trigger>
 ));
 SelectTrigger.displayName = SelectPrimitive.Trigger.displayName;
@@ -149,6 +189,11 @@ export const SelectItem = React.forwardRef<
   const value = typeof props.value === "string" ? props.value : "";
   const isSelected = isMultiple ? multipleContext?.isSelected(value) ?? false : false;
   const isDisabled = Boolean(props.disabled);
+
+  React.useEffect(() => {
+    if (!isMultiple || !value || !textValue) return;
+    multipleContext?.registerLabel(value, textValue);
+  }, [isMultiple, multipleContext, textValue, value]);
 
   return (
     <SelectPrimitive.Item
@@ -377,6 +422,29 @@ function filterSelectChildren(children: React.ReactNode, query: string): React.R
   }
 
   return results;
+}
+
+function collectSelectItemLabels(children: React.ReactNode): Record<string, string> {
+  const labels: Record<string, string> = {};
+
+  const walk = (nodes: React.ReactNode) => {
+    React.Children.forEach(nodes, (child) => {
+      if (!React.isValidElement(child)) return;
+      if (child.type === SelectItem) {
+        const value = typeof child.props.value === "string" ? child.props.value : "";
+        if (!value) return;
+        const textValue = child.props.textValue ?? getNodeText(child.props.children);
+        if (textValue) labels[value] = textValue;
+        return;
+      }
+      if (child.props?.children) {
+        walk(child.props.children);
+      }
+    });
+  };
+
+  walk(children);
+  return labels;
 }
 
 export const SelectSeparator = React.forwardRef<

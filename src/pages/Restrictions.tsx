@@ -8,6 +8,7 @@ import {
   TableHeader,
   TableRow
 } from "@/app/components/ui/table";
+import { Card, CardContent } from "@/app/components/ui/card";
 import { ChevronLeft, ChevronRight } from "@/app/icons/lucide";
 
 type RestrictionType = "warning-1" | "warning-2" | "permanent";
@@ -15,6 +16,7 @@ type RestrictionType = "warning-1" | "warning-2" | "permanent";
 interface Restriction {
   id: string;
   date: string; // yyyy-mm-dd
+  officeId: string;
   officeName: string;
   representativeName: string;
   region: string; // "시 구" or "도 시 구"
@@ -25,21 +27,21 @@ interface Restriction {
 // Mock data - 35개 항목
 const generateMockRestrictions = (): Restriction[] => {
   const offices = [
-    { name: "직방부동산", rep: "홍길동", region: "서울 강남구" },
-    { name: "호갱노노부동산", rep: "김철수", region: "경기 성남시 분당구" },
-    { name: "부동산중개", rep: "이영희", region: "서울 서초구" },
-    { name: "신뢰부동산", rep: "박민수", region: "서울 송파구" },
-    { name: "우리부동산", rep: "최지영", region: "경기 수원시 영통구" },
-    { name: "한국부동산", rep: "정대현", region: "서울 강동구" },
-    { name: "프리미엄부동산", rep: "윤서연", region: "서울 마포구" },
-    { name: "스마트부동산", rep: "장현우", region: "경기 고양시 일산동구" },
-    { name: "글로벌부동산", rep: "오수진", region: "서울 영등포구" },
-    { name: "프로부동산", rep: "한동욱", region: "서울 노원구" },
-    { name: "베스트부동산", rep: "강미영", region: "경기 용인시 기흥구" },
-    { name: "골드부동산", rep: "임태호", region: "서울 강서구" },
-    { name: "플러스부동산", rep: "신혜진", region: "서울 종로구" },
-    { name: "파워부동산", rep: "조성민", region: "경기 성남시 수정구" },
-    { name: "엘리트부동산", rep: "배지은", region: "서울 중구" }
+    { id: "office-1", name: "직방부동산", rep: "홍길동", region: "서울 강남구" },
+    { id: "office-2", name: "호갱노노부동산", rep: "김철수", region: "경기 성남시 분당구" },
+    { id: "office-3", name: "부동산중개", rep: "이영희", region: "서울 서초구" },
+    { id: "office-4", name: "신뢰부동산", rep: "박민수", region: "서울 송파구" },
+    { id: "office-5", name: "우리부동산", rep: "최지영", region: "경기 수원시 영통구" },
+    { id: "office-6", name: "한국부동산", rep: "정대현", region: "서울 강동구" },
+    { id: "office-7", name: "프리미엄부동산", rep: "윤서연", region: "서울 마포구" },
+    { id: "office-8", name: "스마트부동산", rep: "장현우", region: "경기 고양시 일산동구" },
+    { id: "office-9", name: "글로벌부동산", rep: "오수진", region: "서울 영등포구" },
+    { id: "office-10", name: "프로부동산", rep: "한동욱", region: "서울 노원구" },
+    { id: "office-11", name: "베스트부동산", rep: "강미영", region: "경기 용인시 기흥구" },
+    { id: "office-12", name: "골드부동산", rep: "임태호", region: "서울 강서구" },
+    { id: "office-13", name: "플러스부동산", rep: "신혜진", region: "서울 종로구" },
+    { id: "office-14", name: "파워부동산", rep: "조성민", region: "경기 성남시 수정구" },
+    { id: "office-15", name: "엘리트부동산", rep: "배지은", region: "서울 중구" }
   ];
 
   const policies = [
@@ -64,6 +66,7 @@ const generateMockRestrictions = (): Restriction[] => {
     restrictions.push({
       id: String(i + 1),
       date: formattedDate,
+      officeId: office.id,
       officeName: office.name,
       representativeName: office.rep,
       region: office.region,
@@ -76,6 +79,7 @@ const generateMockRestrictions = (): Restriction[] => {
 };
 
 const mockRestrictions: Restriction[] = generateMockRestrictions();
+const currentUserOfficeId = "office-1";
 
 const getDateRange = () => {
   const endDate = new Date();
@@ -108,7 +112,7 @@ const getActionLabel = (action: RestrictionType): string => {
 
 const getStatistics = (restrictions: Restriction[]) => {
   // 중개사무소 수 (중복 제거)
-  const uniqueOffices = new Set(restrictions.map((r) => r.officeName));
+  const uniqueOffices = new Set(restrictions.map((r) => r.officeId));
   const totalOffices = uniqueOffices.size;
   
   // 전체 조치 건수 (중복 포함)
@@ -122,10 +126,39 @@ const getStatistics = (restrictions: Restriction[]) => {
   return { totalOffices, totalActions, warning1, warning2, permanent };
 };
 
+const maskText = (value: string) => {
+  if (!value) return "";
+  return `${value.slice(0, 1)}${"*".repeat(Math.max(0, value.length - 1))}`;
+};
+
+const formatOfficeLabel = (restriction: Restriction) => {
+  if (restriction.officeId === currentUserOfficeId) {
+    return `${restriction.officeName}(대표:${restriction.representativeName})`;
+  }
+  return `${maskText(restriction.officeName)}(대표:${maskText(restriction.representativeName)})`;
+};
+
+const getMostSevereRestriction = (restrictions: Restriction[]) => {
+  if (!restrictions.length) return null;
+  const severityOrder: Record<RestrictionType, number> = {
+    "warning-1": 1,
+    "warning-2": 2,
+    permanent: 3
+  };
+  return [...restrictions]
+    .sort((a, b) => {
+      const severityDiff = severityOrder[b.action] - severityOrder[a.action];
+      if (severityDiff !== 0) return severityDiff;
+      return new Date(b.date).getTime() - new Date(a.date).getTime();
+    })
+    [0];
+};
+
 export function Restrictions() {
   const [filter, setFilter] = React.useState<RestrictionType | "all">("all");
   const [currentPage, setCurrentPage] = React.useState(1);
   const [isLoading, setIsLoading] = React.useState(true);
+  const [hasError] = React.useState(false);
   const itemsPerPage = 10;
   
   const dateRange = getDateRange();
@@ -145,7 +178,11 @@ export function Restrictions() {
   const paginatedData = filteredData.slice(startIndex, endIndex);
   
   const statistics = getStatistics(mockRestrictions);
-  const filteredStatistics = getStatistics(filteredData);
+  const myRestrictions = React.useMemo(
+    () => mockRestrictions.filter((restriction) => restriction.officeId === currentUserOfficeId),
+    []
+  );
+  const myLatestRestriction = React.useMemo(() => getMostSevereRestriction(myRestrictions), [myRestrictions]);
   
   React.useEffect(() => {
     setCurrentPage(1);
@@ -158,13 +195,63 @@ export function Restrictions() {
     return () => window.clearTimeout(timer);
   }, []);
   
+  if (hasError) {
+    return (
+      <div className="flex flex-col items-center justify-center gap-4 py-12 px-5">
+        <div className="text-base font-semibold leading-6 text-foreground">데이터를 불러오지 못했어요.</div>
+        <div className="text-sm font-normal leading-5 text-mutedForeground">
+          잠시 후 다시 시도하거나 홈으로 이동해 주세요.
+        </div>
+        <div className="flex items-center gap-2">
+          <button
+            type="button"
+            onClick={() => window.location.reload()}
+            className="h-9 rounded-button border border-inputBorder px-4 text-sm font-medium text-foreground hover:bg-muted"
+          >
+            페이지 새로고침
+          </button>
+          <button
+            type="button"
+            onClick={() => (window.location.href = "/")}
+            className="h-9 rounded-button border border-inputBorder px-4 text-sm font-medium text-foreground hover:bg-muted"
+          >
+            홈으로 돌아가기
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="flex flex-col gap-[30px] py-5 px-5">
+      {myLatestRestriction && (
+        <Card>
+          <CardContent className="flex flex-col gap-3 p-4 md:p-5">
+            <div className="text-base font-semibold leading-6 text-foreground">내 중개사무소 제한조치</div>
+            <div
+              className={cn(
+                "flex flex-col gap-2 rounded-card border border-border p-4",
+                myLatestRestriction.action === "permanent" && "bg-destructive/10 text-destructive"
+              )}
+            >
+              <div className="text-sm font-semibold leading-5">
+                {myLatestRestriction.officeName}(대표:{myLatestRestriction.representativeName})
+              </div>
+              <div className="flex flex-col gap-1 text-sm font-normal leading-5">
+                <span>날짜: {myLatestRestriction.date}</span>
+                <span>처리: {getActionLabel(myLatestRestriction.action)}</span>
+                <span>위반 정책: {myLatestRestriction.violationPolicies.join(", ")}</span>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      )}
+
       {/* 상단 요약 정보 카드 */}
       <div className="py-5 md:p-5 bg-transparent md:bg-background rounded-[6px] md:rounded-[6px] flex flex-col gap-4">
         <div className="flex flex-col md:flex-row md:items-center gap-3">
           <div className="flex items-center gap-1">
-            <span className="text-base font-bold leading-6 text-foreground">제한 조치된 중개사무소 </span>
+            <span className="text-base font-bold leading-6 text-foreground">제한 조치된 중개사무소</span>
             <span className="text-base font-bold leading-6 text-primary">총 {statistics.totalOffices}곳</span>
           </div>
           <div className="flex-1 md:h-5 text-left md:text-right text-sm font-normal leading-5 text-mutedForeground">
@@ -176,53 +263,46 @@ export function Restrictions() {
         <div className="flex items-center gap-5">
           <button
             type="button"
-            onClick={() => setFilter("all")}
-            className={cn(
-              "flex-1 px-4 py-3 bg-grey-50 rounded-[8px] border border-border flex flex-col gap-1 items-start transition-colors",
-              filter === "all" && "outline outline-1 outline-offset-[-1px] outline-primary"
-            )}
+            onClick={() => setFilter(filter === "warning-1" ? "all" : "warning-1")}
+            className="flex-1 rounded-[8px] px-4 py-3 text-left transition-colors"
           >
-            <div className="text-base font-semibold leading-6 text-secondaryForeground">전체</div>
-            <div className="text-xl font-semibold leading-7 text-secondaryForeground">
-              {statistics.totalActions}건
-            </div>
-          </button>
-          <button
-            type="button"
-            onClick={() => setFilter("warning-1")}
-            className={cn(
-              "flex-1 px-4 py-3 bg-grey-50 rounded-[8px] border border-border flex flex-col gap-1 items-start transition-colors",
-              filter === "warning-1" && "outline outline-1 outline-offset-[-1px] outline-primary"
-            )}
-          >
-            <div className="text-base font-semibold leading-6 text-secondaryForeground">경고 1회</div>
-            <div className="text-xl font-semibold leading-7 text-secondaryForeground">
+            <div className="text-base font-semibold leading-6 text-foreground">경고 1회</div>
+            <div
+              className={cn(
+                "text-xl font-semibold leading-7 text-foreground",
+                filter === "warning-1" && "text-primary"
+              )}
+            >
               {statistics.warning1}건
             </div>
           </button>
           <button
             type="button"
-            onClick={() => setFilter("warning-2")}
-            className={cn(
-              "flex-1 px-4 py-3 bg-grey-50 rounded-[8px] border border-border flex flex-col gap-1 items-start transition-colors",
-              filter === "warning-2" && "outline outline-1 outline-offset-[-1px] outline-primary"
-            )}
+            onClick={() => setFilter(filter === "warning-2" ? "all" : "warning-2")}
+            className="flex-1 rounded-[8px] px-4 py-3 text-left transition-colors"
           >
-            <div className="text-base font-semibold leading-6 text-secondaryForeground">경고 2회</div>
-            <div className="text-xl font-semibold leading-7 text-secondaryForeground">
+            <div className="text-base font-semibold leading-6 text-foreground">경고 2회</div>
+            <div
+              className={cn(
+                "text-xl font-semibold leading-7 text-foreground",
+                filter === "warning-2" && "text-primary"
+              )}
+            >
               {statistics.warning2}건
             </div>
           </button>
           <button
             type="button"
-            onClick={() => setFilter("permanent")}
-            className={cn(
-              "flex-1 px-4 py-3 bg-grey-50 rounded-[8px] border border-border flex flex-col gap-1 items-start transition-colors",
-              filter === "permanent" && "outline outline-1 outline-offset-[-1px] outline-primary"
-            )}
+            onClick={() => setFilter(filter === "permanent" ? "all" : "permanent")}
+            className="flex-1 rounded-[8px] px-4 py-3 text-left transition-colors"
           >
-            <div className="text-base font-semibold leading-6 text-secondaryForeground">영구 제한</div>
-            <div className="text-xl font-semibold leading-7 text-secondaryForeground">
+            <div className="text-base font-semibold leading-6 text-foreground">영구제한</div>
+            <div
+              className={cn(
+                "text-xl font-semibold leading-7 text-foreground",
+                filter === "permanent" && "text-primary"
+              )}
+            >
               {statistics.permanent}건
             </div>
           </button>
@@ -271,7 +351,7 @@ export function Restrictions() {
                       {item.date}
                     </TableCell>
                     <TableCell className="py-4 px-0 md:px-4 text-sm font-normal leading-5 text-foreground">
-                      {item.officeName}(대표: {item.representativeName})
+                      {formatOfficeLabel(item)}
                     </TableCell>
                     <TableCell className="hidden min-[391px]:table-cell py-4 px-0 md:px-4 text-sm font-normal leading-5 text-foreground">
                       {item.region}
@@ -297,7 +377,7 @@ export function Restrictions() {
           
           {/* 페이지네이션 */}
           {totalPages > 1 && (
-            <div className="flex justify-center items-start gap-1">
+            <div className="table-pagination flex justify-center items-start gap-1">
               <button
                 type="button"
                 onClick={() => {
