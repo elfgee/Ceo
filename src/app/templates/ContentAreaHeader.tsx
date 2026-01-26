@@ -27,7 +27,8 @@ export type ContentAreaHeaderProps = {
   tabs?: ContentAreaTab[];
   activeTab?: string;
   onTabChange?: (value: string) => void;
-  subText?: string;
+  subText?: React.ReactNode;
+  subTextPlacement?: "inline" | "bottom";
   linkLabel?: string;
   onLinkClick?: () => void;
 };
@@ -55,6 +56,7 @@ export function ContentAreaHeader({
   activeTab,
   onTabChange,
   subText,
+  subTextPlacement = "bottom",
   linkLabel,
   onLinkClick
 }: ContentAreaHeaderProps) {
@@ -65,7 +67,8 @@ export function ContentAreaHeader({
     <div className={cn("w-full", className)}>
       <div className="flex w-full flex-col">
         <div className="flex h-[60px] w-full flex-col gap-2 bg-background px-5 pb-2 pt-4 md:flex-row md:items-center md:justify-between">
-          <div className="flex min-w-0 flex-1 items-center gap-1">
+          <div className="flex min-w-0 flex-1 flex-col gap-1 md:flex-row md:items-center md:gap-1">
+            <div className="flex min-w-0 items-center gap-1">
             {showLeadingIcon ? (
               <span className="flex h-7 w-7 items-center justify-center">
                 {leadingIcon ?? <ChevronLeft className="h-7 w-7 text-foreground" />}
@@ -81,6 +84,14 @@ export function ContentAreaHeader({
               <Badge variant="default">
                 {badgeLabel}
               </Badge>
+            ) : null}
+            </div>
+            {subTextPlacement === "inline" && subText ? (
+              typeof subText === "string" ? (
+                <span className="text-sm font-normal leading-5 text-mutedForeground">{subText}</span>
+              ) : (
+                <div className="text-sm font-normal leading-5 text-mutedForeground">{subText}</div>
+              )
             ) : null}
           </div>
           {showActions ? (
@@ -119,9 +130,15 @@ export function ContentAreaHeader({
           </Tabs>
         ) : null}
 
-        {(subText || linkLabel) && (
+        {(subText || linkLabel) && subTextPlacement === "bottom" && (
           <div className="flex w-full flex-wrap items-center gap-3 bg-background px-5 py-3">
-            {subText ? <span className="text-sm font-normal leading-5 text-mutedForeground">{subText}</span> : null}
+            {subText ? (
+              typeof subText === "string" ? (
+                <span className="text-sm font-normal leading-5 text-mutedForeground">{subText}</span>
+              ) : (
+                <div className="text-sm font-normal leading-5 text-mutedForeground">{subText}</div>
+              )
+            ) : null}
             {linkLabel ? (
               <Button variant="link" className="h-auto p-0 text-sm font-normal" onClick={onLinkClick}>
                 {linkLabel}

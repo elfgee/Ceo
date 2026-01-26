@@ -9,6 +9,8 @@ import {
   TableRow
 } from "@/app/components/ui/table";
 import { Card, CardContent } from "@/app/components/ui/card";
+import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/app/components/ui/hover-card";
+import { ContentAreaHeader } from "@/app/templates/ContentAreaHeader";
 import { ChevronLeft, ChevronRight } from "@/app/icons/lucide";
 
 type RestrictionType = "warning-1" | "warning-2" | "permanent";
@@ -224,28 +226,6 @@ export function Restrictions() {
 
   return (
     <div className="flex flex-col gap-[30px] py-5 px-5">
-      {myLatestRestriction && (
-        <Card>
-          <CardContent className="flex flex-col gap-3 p-4 md:p-5">
-            <div className="text-base font-semibold leading-6 text-foreground">내 중개사무소 제한조치</div>
-            <div
-              className={cn(
-                "flex flex-col gap-2 rounded-card border border-border p-4",
-                myLatestRestriction.action === "permanent" && "bg-destructive/10 text-destructive"
-              )}
-            >
-              <div className="text-sm font-semibold leading-5">
-                {myLatestRestriction.officeName}(대표:{myLatestRestriction.representativeName})
-              </div>
-              <div className="flex flex-col gap-1 text-sm font-normal leading-5">
-                <span>날짜: {myLatestRestriction.date}</span>
-                <span>처리: {getActionLabel(myLatestRestriction.action)}</span>
-                <span>위반 정책: {myLatestRestriction.violationPolicies.join(", ")}</span>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-      )}
 
       {/* 상단 요약 정보 카드 */}
       <div className="py-5 md:p-5 bg-transparent md:bg-background rounded-[6px] md:rounded-[6px] flex flex-col gap-4">
@@ -260,52 +240,111 @@ export function Restrictions() {
         </div>
         
         {/* 제한 조치 유형별 통계 및 필터 */}
-        <div className="flex items-center gap-5">
-          <button
-            type="button"
-            onClick={() => setFilter(filter === "warning-1" ? "all" : "warning-1")}
-            className="flex-1 rounded-[8px] px-4 py-3 text-left transition-colors"
-          >
-            <div className="text-base font-semibold leading-6 text-foreground">경고 1회</div>
-            <div
-              className={cn(
-                "text-xl font-semibold leading-7 text-foreground",
-                filter === "warning-1" && "text-primary"
-              )}
-            >
-              {statistics.warning1}건
-            </div>
-          </button>
-          <button
-            type="button"
-            onClick={() => setFilter(filter === "warning-2" ? "all" : "warning-2")}
-            className="flex-1 rounded-[8px] px-4 py-3 text-left transition-colors"
-          >
-            <div className="text-base font-semibold leading-6 text-foreground">경고 2회</div>
-            <div
-              className={cn(
-                "text-xl font-semibold leading-7 text-foreground",
-                filter === "warning-2" && "text-primary"
-              )}
-            >
-              {statistics.warning2}건
-            </div>
-          </button>
-          <button
-            type="button"
-            onClick={() => setFilter(filter === "permanent" ? "all" : "permanent")}
-            className="flex-1 rounded-[8px] px-4 py-3 text-left transition-colors"
-          >
-            <div className="text-base font-semibold leading-6 text-foreground">영구제한</div>
-            <div
-              className={cn(
-                "text-xl font-semibold leading-7 text-foreground",
-                filter === "permanent" && "text-primary"
-              )}
-            >
-              {statistics.permanent}건
-            </div>
-          </button>
+        <div className="flex flex-col gap-4 md:flex-row md:items-center md:gap-5">
+          <HoverCard>
+            <HoverCardTrigger asChild>
+              <button
+                type="button"
+                onClick={() => setFilter("all")}
+                className="flex-1 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+              >
+                <Card className="h-full transition-colors hover:bg-muted">
+                  <CardContent className="p-4">
+                    <div className="text-base font-semibold leading-6 text-foreground">전체</div>
+                    <div
+                      className={cn(
+                        "text-xl font-semibold leading-7 text-foreground",
+                        filter === "all" && "text-primary"
+                      )}
+                    >
+                      {statistics.warning1 + statistics.warning2 + statistics.permanent}건
+                    </div>
+                  </CardContent>
+                </Card>
+              </button>
+            </HoverCardTrigger>
+            <HoverCardContent className="text-sm leading-5">
+              전체 제한 조치 목록을 보여줍니다.
+            </HoverCardContent>
+          </HoverCard>
+          <HoverCard>
+            <HoverCardTrigger asChild>
+              <button
+                type="button"
+                onClick={() => setFilter(filter === "warning-1" ? "all" : "warning-1")}
+                className="flex-1 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+              >
+                <Card className="h-full transition-colors hover:bg-muted">
+                  <CardContent className="p-4">
+                    <div className="text-base font-semibold leading-6 text-foreground">경고 1회</div>
+                    <div
+                      className={cn(
+                        "text-xl font-semibold leading-7 text-foreground",
+                        filter === "warning-1" && "text-primary"
+                      )}
+                    >
+                      {statistics.warning1}건
+                    </div>
+                  </CardContent>
+                </Card>
+              </button>
+            </HoverCardTrigger>
+            <HoverCardContent className="text-sm leading-5">
+              경고 1회 조치만 필터링합니다.
+            </HoverCardContent>
+          </HoverCard>
+          <HoverCard>
+            <HoverCardTrigger asChild>
+              <button
+                type="button"
+                onClick={() => setFilter(filter === "warning-2" ? "all" : "warning-2")}
+                className="flex-1 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+              >
+                <Card className="h-full transition-colors hover:bg-muted">
+                  <CardContent className="p-4">
+                    <div className="text-base font-semibold leading-6 text-foreground">경고 2회</div>
+                    <div
+                      className={cn(
+                        "text-xl font-semibold leading-7 text-foreground",
+                        filter === "warning-2" && "text-primary"
+                      )}
+                    >
+                      {statistics.warning2}건
+                    </div>
+                  </CardContent>
+                </Card>
+              </button>
+            </HoverCardTrigger>
+            <HoverCardContent className="text-sm leading-5">
+              경고 2회 조치만 필터링합니다.
+            </HoverCardContent>
+          </HoverCard>
+          <HoverCard>
+            <HoverCardTrigger asChild>
+              <button
+                type="button"
+                onClick={() => setFilter(filter === "permanent" ? "all" : "permanent")}
+                className="flex-1 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+              >
+                <Card className="h-full transition-colors hover:bg-muted">
+                  <CardContent className="p-4">
+                    <div className="text-base font-semibold leading-6 text-foreground">영구제한</div>
+                    <div
+                      className={cn(
+                        "text-xl font-semibold leading-7 text-foreground",
+                        filter === "permanent" && "text-primary"
+                      )}
+                    >
+                      {statistics.permanent}건
+                    </div>
+                  </CardContent>
+                </Card>
+              </button>
+            </HoverCardTrigger>
+            <HoverCardContent className="text-sm leading-5">
+              영구제한 조치만 필터링합니다.
+            </HoverCardContent>
+          </HoverCard>
         </div>
       </div>
       
