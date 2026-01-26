@@ -1,8 +1,8 @@
 import * as React from "react";
 import {
   DayPicker,
-  type CaptionProps,
   type DayPickerProps,
+  type MonthCaptionProps,
   useDayPicker,
   useNavigation
 } from "react-day-picker";
@@ -13,9 +13,15 @@ import { buttonVariants } from "./button";
 
 export type CalendarProps = DayPickerProps;
 
-function CalendarMonthCaption({ displayMonth, className }: CaptionProps) {
+function CalendarHiddenCaption(_: MonthCaptionProps): JSX.Element {
+  return <span className="sr-only" />;
+}
+
+function CalendarMonthCaption({ calendarMonth, className }: MonthCaptionProps) {
   const { previousMonth, nextMonth, goToMonth } = useNavigation();
-  const monthLabel = new Intl.DateTimeFormat("en-US", { month: "long", year: "numeric" }).format(displayMonth);
+  const monthLabel = new Intl.DateTimeFormat("en-US", { month: "long", year: "numeric" }).format(
+    calendarMonth.date
+  );
 
   return (
     <div className={cn("flex flex-col gap-3", className)}>
@@ -203,13 +209,11 @@ export function Calendar({ className, classNames, showOutsideDays = true, compon
     ...(isDropdownLayout
       ? {
           Months: CalendarDropdownMonths,
-          MonthCaption: () => null,
-          Nav: () => null
+          MonthCaption: CalendarHiddenCaption
         }
       : {
           Months: CalendarMonths,
-          MonthCaption: CalendarMonthCaption,
-          Nav: () => null
+          MonthCaption: CalendarMonthCaption
         })
   };
 
@@ -221,7 +225,7 @@ export function Calendar({ className, classNames, showOutsideDays = true, compon
       classNames={{
         months: "flex flex-col gap-4",
         month: "flex flex-col items-center gap-3",
-        month_caption: isGroupedMonths ? "hidden" : "flex w-[252px] flex-col gap-3",
+        month_caption: isGroupedMonths || isDropdownLayout ? "hidden" : "flex w-[252px] flex-col gap-3",
         caption_label: "sr-only",
         nav: "hidden",
         nav_button: cn(buttonVariants({ variant: "outline" }), "h-7 w-7 p-0"),
