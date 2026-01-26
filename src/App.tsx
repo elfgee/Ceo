@@ -1,6 +1,8 @@
+import * as React from "react";
 import { Routes, Route, Navigate, Outlet, useLocation, useNavigate } from "react-router-dom";
 import { Gnb } from "@/app/templates/Gnb";
 import { ContentAreaHeader } from "@/app/templates/ContentAreaHeader";
+import { currentUserOfficeId, getActionLabel, getMyLatestRestriction, mockRestrictions } from "@/pages/restrictionsData";
 import { SideMenuBar } from "@/app/templates/SideMenuBar";
 import { CHAT_GNB_LABEL, getGnbPath, getLnbConfig, getMobileMenuSections, openChatInNewTab } from "@/app/routes/nav";
 import { useAuth } from "@/app/auth/auth";
@@ -215,6 +217,16 @@ function SectionShell() {
   const location = useLocation();
   const lnb = getLnbConfig(location.pathname);
   const selectedMenuLabel = getSelectedMenuLabel(location.pathname, lnb);
+  const isRestrictionsPage = location.pathname === "/fake-ads-out/restrictions";
+  const myLatestRestriction = React.useMemo(
+    () => (isRestrictionsPage ? getMyLatestRestriction(mockRestrictions, currentUserOfficeId) : null),
+    [isRestrictionsPage]
+  );
+  const restrictionsSubText = myLatestRestriction
+    ? `내가 받은 제한 조치: ${getActionLabel(myLatestRestriction.action)} | ${myLatestRestriction.violationPolicies.join(
+        ", "
+      )} | ${myLatestRestriction.date}`
+    : undefined;
 
   return (
     <div className="h-full flex max-w-[1920px] mx-auto">
@@ -222,7 +234,11 @@ function SectionShell() {
       {lnb ? <SideMenuBar title={lnb.title} items={lnb.items} className="hidden md:flex shrink-0" /> : null}
       <main className="flex-1 min-w-0 min-h-0 h-full overflow-auto">
         <div className="w-full h-fit">
-          <ContentAreaHeader title={selectedMenuLabel ?? lnb?.title ?? ""} />
+          <ContentAreaHeader
+            title={selectedMenuLabel ?? lnb?.title ?? ""}
+            subTextPlacement={restrictionsSubText ? "bottom" : undefined}
+            subText={restrictionsSubText ? <span className="text-destructive">{restrictionsSubText}</span> : undefined}
+          />
           <div className="bg-background md:bg-canvas-100">
             <div className="w-full max-w-[1080px] mx-auto">
               <Outlet />
